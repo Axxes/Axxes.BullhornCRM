@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM", "Axxes.BullhornCRM\Axxes.BullhornCRM.csproj", "{0336BB33-0C85-4A3C-8D85-0FFD42A08266}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM", "src\Axxes.BullhornCRM\Axxes.BullhornCRM.csproj", "{0336BB33-0C85-4A3C-8D85-0FFD42A08266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
