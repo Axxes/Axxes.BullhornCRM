@@ -5,10 +5,9 @@ using Newtonsoft.Json;
 namespace Axxes.BullhornCRM.Models;
 
 [EntityName(nameof(Note))]
-public class Note
+public class Note : IBullhornEntity
 {
-    [JsonProperty("id")]
-    public int Id { get; set; }
+    [JsonProperty("id")] public long Id { get; set; }
 
     [JsonProperty("dateAdded")]
     [JsonConverter(typeof(MillisecondEpochConverter))]

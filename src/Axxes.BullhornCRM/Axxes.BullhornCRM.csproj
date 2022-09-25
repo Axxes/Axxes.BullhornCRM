@@ -16,6 +16,7 @@
     <ItemGroup>
         <InternalsVisibleTo Include="Axxes.BullhornCRM.Extensions.DependencyInjection" />
         <InternalsVisibleTo Include="Axxes.BullhornCRM.Tests.UnitTests" />
+        <InternalsVisibleTo Include="Axxes.BullhornCRM.Tests.IntegrationTests" />
     </ItemGroup>
 
 </Project>

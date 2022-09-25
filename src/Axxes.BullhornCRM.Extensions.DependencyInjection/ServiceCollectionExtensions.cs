@@ -28,7 +28,7 @@ public static class ServiceCollectionExtensions
         
         services.AddSingleton(auth);
         
-        var models = typeof(ServiceCollectionExtensions)
+        var models = typeof(IBullhorn<>)
             .Assembly
             .GetExportedTypes()
             .Concat(assemblies.SelectMany(x => x.GetExportedTypes()))
