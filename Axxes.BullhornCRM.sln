@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM", "src\Ax
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{139623D0-4147-4690-BD62-64ACD46434E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM.UnitTests", "tests\Axxes.BullhornCRM.UnitTests\Axxes.BullhornCRM.UnitTests.csproj", "{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM.Tests.UnitTests", "tests\Axxes.BullhornCRM.Tests.UnitTests\Axxes.BullhornCRM.Tests.UnitTests.csproj", "{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM.Extensions.DependencyInjection", "src\Axxes.BullhornCRM.Extensions.DependencyInjection\Axxes.BullhornCRM.Extensions.DependencyInjection.csproj", "{C437AAD2-F653-4352-8F49-8175D26367E6}"
 EndProject
