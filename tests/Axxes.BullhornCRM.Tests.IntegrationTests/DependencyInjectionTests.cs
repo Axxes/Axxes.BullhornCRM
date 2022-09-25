@@ -41,4 +41,19 @@ public class DependencyInjectionTests
             new object[] { typeof(IBullhorn<Shortlist>) },
             new object[] { typeof(IBullhorn<ShortlistCandidate>) },
         };
+    
+    [Theory]
+    [MemberData(nameof(WhenRegisteringBullhornCRM_AllHistoryEntitiesShouldBeRegistered_Data))]
+    public void WhenRegisteringBullhornCRM_AllHistoryEntitiesShouldBeRegistered(Type expectedType)
+    {
+        var service = _serviceProvider.GetService(expectedType);
+        
+        Assert.NotNull(service);
+    }
+    
+    public static IEnumerable<object[]> WhenRegisteringBullhornCRM_AllHistoryEntitiesShouldBeRegistered_Data =>
+        new List<object[]>
+        {
+            new object[] { typeof(IBullhornEditHistory<Candidate>) }
+        };
 }

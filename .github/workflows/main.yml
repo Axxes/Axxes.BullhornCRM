@@ -20,5 +20,7 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - name: Test
+      - name: Unit Tests
         run: dotnet test --configuration Release --no-build --no-restore --verbosity normal ./tests/Axxes.BullhornCRM.Tests.UnitTests
+      - name: Integration Tests
+        run: dotnet test --configuration Release --no-build --no-restore --verbosity normal ./tests/Axxes.BullhornCRM.Tests.IntegrationTests
