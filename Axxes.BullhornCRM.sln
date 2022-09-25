@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM", "src\Axxes.BullhornCRM\Axxes.BullhornCRM.csproj", "{0336BB33-0C85-4A3C-8D85-0FFD42A08266}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{139623D0-4147-4690-BD62-64ACD46434E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM.UnitTests", "tests\Axxes.BullhornCRM.UnitTests\Axxes.BullhornCRM.UnitTests.csproj", "{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,12 @@ Global
 		{0336BB33-0C85-4A3C-8D85-0FFD42A08266}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0336BB33-0C85-4A3C-8D85-0FFD42A08266}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0336BB33-0C85-4A3C-8D85-0FFD42A08266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B} = {139623D0-4147-4690-BD62-64ACD46434E3}
 	EndGlobalSection
 EndGlobal
