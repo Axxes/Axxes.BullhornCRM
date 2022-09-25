@@ -1,4 +1,3 @@
-using Axxes.BullhornCRM.Extensions;
 using Axxes.BullhornCRM.Utility;
 using Axxes.BullhornCRM.Utility.Models;
 
@@ -34,7 +33,7 @@ internal class BullhornTokenHandler : DelegatingHandler
         }
 
         request.RequestUri =
-            new Uri(request.RequestUri.ToString().Replace(ServiceCollectionExtensions.BaseUri, _baseUrl));
+            new Uri(request.RequestUri.ToString().Replace(Settings.BaseUri, _baseUrl));
         
         request.Headers.Add("BhRestToken", _bhRestToken);
             

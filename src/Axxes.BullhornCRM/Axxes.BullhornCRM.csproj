@@ -12,5 +12,9 @@
         <PackageReference Include="Refit.HttpClientFactory" Version="6.*" />
         <PackageReference Include="Refit.Newtonsoft.Json" Version="6.*" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="Axxes.BullhornCRM.Extensions.DependencyInjection" />
+    </ItemGroup>
 
 </Project>

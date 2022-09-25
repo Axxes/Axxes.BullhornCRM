@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using Axxes.BullhornCRM.Attributes;
 using Axxes.BullhornCRM.DelegatingHandlers;
@@ -8,12 +12,10 @@ using Axxes.BullhornCRM.Utility.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 
-namespace Axxes.BullhornCRM.Extensions;
+namespace Axxes.BullhornCRM.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    internal const string BaseUri = "https://starturl.com/";
-
     public static IServiceCollection AddBullhornCRM(this IServiceCollection services, Action<BullhornAuthCredentials> options, params Assembly[] assemblies)
     {
         var auth = new BullhornAuthCredentials();
@@ -21,8 +23,8 @@ public static class ServiceCollectionExtensions
         
         var settings = new RefitSettings(new NewtonsoftJsonContentSerializer());
         
-        const string baseEntityUri = BaseUri + "entity/";
-        const string baseQueryUri = BaseUri + "query/";
+        const string baseEntityUri = Settings.BaseUri + "entity/";
+        const string baseQueryUri = Settings.BaseUri + "query/";
         
         services.AddSingleton(auth);
         

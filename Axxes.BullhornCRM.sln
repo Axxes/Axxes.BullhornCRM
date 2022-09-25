@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{139623D0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM.UnitTests", "tests\Axxes.BullhornCRM.UnitTests\Axxes.BullhornCRM.UnitTests.csproj", "{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axxes.BullhornCRM.Extensions.DependencyInjection", "src\Axxes.BullhornCRM.Extensions.DependencyInjection\Axxes.BullhornCRM.Extensions.DependencyInjection.csproj", "{C437AAD2-F653-4352-8F49-8175D26367E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C437AAD2-F653-4352-8F49-8175D26367E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C437AAD2-F653-4352-8F49-8175D26367E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C437AAD2-F653-4352-8F49-8175D26367E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C437AAD2-F653-4352-8F49-8175D26367E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D249E240-A9BC-49F0-99B2-9F723F9C4F4B} = {139623D0-4147-4690-BD62-64ACD46434E3}
