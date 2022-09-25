@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -8,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="Refit" Version="6.3.2" />
-        <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
-        <PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.*" />
+        <PackageReference Include="Refit" Version="6.*" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="6.*" />
+        <PackageReference Include="Refit.Newtonsoft.Json" Version="6.*" />
     </ItemGroup>
 
 </Project>
