@@ -1,15 +1,21 @@
 name: dotnet package
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_ARTIFACTS_FEED_URL: https://pkgs.dev.azure.com/axxes/_packaging/AEP.Public/nuget/v3/index.json    
+  BUILD_CONFIGURATION: 'Release'    # set this to the appropriate build configuration
+  DOTNET_VERSION: '7.x'
 
 jobs:
-  build:
-
+  az-artifacts-build-and-deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '6.0.x' ]
-
+        dotnet-version: [ '7.0.x' ]
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
@@ -24,3 +30,26 @@ jobs:
         run: dotnet test --configuration Release --no-build --no-restore --verbosity normal ./tests/Axxes.BullhornCRM.Tests.UnitTests
       - name: Integration Tests
         run: dotnet test --configuration Release --no-build --no-restore --verbosity normal ./tests/Axxes.BullhornCRM.Tests.IntegrationTests
+        
+      # Checkout the repo
+      - uses: actions/checkout@v2
+
+      # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          source-url: ${{ env.AZURE_ARTIFACTS_FEED_URL }}
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }} 
+
+      # Run dotnet build and package
+      - name: dotnet build and publish
+        run: |
+          dotnet restore
+          dotnet build --configuration '${{ env.BUILD_CONFIGURATION }}'
+          dotnet pack -c '${{ env.BUILD_CONFIGURATION }}' --version-suffix $GITHUB_RUN_ID
+
+      # Publish the package to Azure Artifacts
+      - name: 'dotnet publish'
+        run: dotnet nuget push --api-key AzureArtifacts bin/Release/*.nupkg 
