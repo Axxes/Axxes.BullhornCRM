@@ -9,7 +9,7 @@ public class RestToken
     }
 
     [JsonProperty("BhRestToken")]
-    public Guid BhRestToken { get; set; }
+    public string BhRestToken { get; set; }
 
     [JsonProperty("restUrl")]
     public Uri RestUrl { get; set; }

@@ -38,6 +38,14 @@ public static class ServiceCollectionExtensions
 
         RegisterBullhornApis(baseEntityUri, services, settings, models);
         RegisterBullhornHistoryApis(baseQueryUri, services, settings, models);
+        
+        services.AddRefitClient<IBullhornSubscriptions>()
+            .ConfigureHttpClient(x =>
+            {
+                x.BaseAddress = new Uri(Settings.BaseUri);
+                x.Timeout = TimeSpan.FromMinutes(10);
+            })
+            .ConfigurePrimaryHttpMessageHandler(sp => sp.GetRequiredService<BullhornTokenHandler>());
 
         services.AddTransient<TokenProvider>();
         services.AddSingleton<BullhornTokenHandler>();
