@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
