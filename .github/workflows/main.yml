@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_ARTIFACTS_FEED_URL: https://pkgs.dev.azure.com/axxes/_packaging/AEP.Public/nuget/v3/index.json    
-  BUILD_CONFIGURATION: 'Release'    # set this to the appropriate build configuration
+  BUILD_CONFIGURATION: 'Release'
   DOTNET_VERSION: '7.x'
 
 jobs:
@@ -49,4 +49,4 @@ jobs:
 
       # Publish the package to Azure Artifacts
       - name: 'dotnet publish'
-        run: dotnet nuget push --api-key AzureArtifacts **/*.nupkg 
+        run: dotnet nuget push --api-key AzureArtifacts **/*.nupkg  --no-symbols
