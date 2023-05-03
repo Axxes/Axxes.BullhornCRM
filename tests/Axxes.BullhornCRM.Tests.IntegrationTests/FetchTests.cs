@@ -9,7 +9,6 @@ namespace Axxes.BullhornCRM.Tests.IntegrationTests;
 public class FetchTests
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly IBullhorn<Candidate> _bullhornCandidateApi;
     private readonly int _dummyCandidateId;
 
     public FetchTests()
@@ -50,8 +49,8 @@ public class FetchTests
         var candidates = await candidateProvider.Get(idList);
         Assert.NotNull(candidates);
     }
-
-    [Fact]
+    
+    [Fact(Skip = "No subscriptions should be fetched during testing")]
     public async void FetchSubscriptions()
     {
         var subscriptionProvider = _serviceProvider.GetRequiredService<IBullhornSubscriptions>();
