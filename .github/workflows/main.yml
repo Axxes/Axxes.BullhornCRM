@@ -21,8 +21,6 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-      - name: Install Packages
-        run: dotnet add package Microsoft.Extensions.Configuration.AzureAppConfiguration
       - name: Log in with Azure
         uses: azure/login@v1
         with:
