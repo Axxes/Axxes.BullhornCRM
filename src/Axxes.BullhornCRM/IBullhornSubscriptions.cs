@@ -11,19 +11,19 @@ public interface IBullhornSubscriptions
     [QueryUriFormat(UriFormat.Unescaped)]
     internal Task<SubscriptionEvent> GetInternal(string id, CancellationToken cancellationToken = default);
 
-    async Task<IEnumerable<SubscriptionEvent.Event>> Get(string id, IEnumerable<string> names, IEnumerable<string> eventTypes, CancellationToken cancellationToken = default)
+    async Task<SubscriptionEvent> Get(string id, IEnumerable<string> names, IEnumerable<string> eventTypes, CancellationToken cancellationToken = default)
     {
         try
         {
             var result = await GetInternal(id, cancellationToken: cancellationToken);
-            return result.Events;
+            return result;
         }
         catch (ApiException e) when (e.StatusCode == HttpStatusCode.NotFound)
         {
             var namesUri = string.Join(",", names);
             var eventTypesUri = string.Join(",", eventTypes);
             await PutInternal(id, namesUri, eventTypesUri, cancellationToken);
-            return Enumerable.Empty<SubscriptionEvent.Event>();
+            return new SubscriptionEvent();
         }
     }
 
