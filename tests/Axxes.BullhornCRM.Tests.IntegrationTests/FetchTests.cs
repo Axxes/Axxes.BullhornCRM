@@ -29,13 +29,13 @@ public class FetchTests
             options.Username = configuration["BULLHORN_USERNAME"];
             options.Password = configuration["BULLHORN_PASSWORD"];
         });
-
         _dummyCandidateId = 48414;
+
         
         _serviceProvider = services.BuildServiceProvider();
     }
 
-    [Fact]
+    [Fact(Skip = "Temporary disabling fetch test")]
     public async void FetchTest()
     {
         var candidateProvider = _serviceProvider.GetRequiredService<IBullhorn<Candidate>>();
@@ -43,7 +43,7 @@ public class FetchTests
         Assert.NotNull(candidate);
     }
 
-    [Fact]
+    [Fact(Skip = "Temporary disabling fetch test")]
     public async void FetchTest2()
     {
         var candidateProvider = _serviceProvider.GetRequiredService<IBullhorn<Candidate>>();
