@@ -21,7 +21,7 @@ internal sealed class RestTokenFetcher : BaseFetcher
 
         if (!result.IsSuccessStatusCode)
             throw new RestTokenFetchFailedException(
-                $"Could not fetch rest token: {result.StatusCode} '{result.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'");
+                $"Could not fetch rest token: {_client.BaseAddress} {restUri} {result.StatusCode} '{result.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'");
 
         var content = await result.Content.ReadAsStringAsync();
             

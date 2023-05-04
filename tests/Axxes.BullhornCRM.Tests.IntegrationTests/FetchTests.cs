@@ -13,12 +13,15 @@ public class FetchTests
 
     public FetchTests()
     {
-        var configuration = new ConfigurationBuilder().AddAzureAppConfiguration(options =>
-        {
-            options.Connect(new Uri("https://appconfig9c4fbe38.azconfig.io"), new AzureCliCredential());
-        }).Build();
+        var configuration = new ConfigurationBuilder()
+            .AddAzureAppConfiguration(options =>
+            {
+                options.Connect(new Uri("https://appconfig9c4fbe38.azconfig.io"), new AzureCliCredential());
+            })
+            .Build();
         
         var services = new ServiceCollection();
+        
         services.AddBullhornCRM(options =>
         {
             options.ClientId = configuration["BULLHORN_CLIENTID"];
@@ -44,8 +47,7 @@ public class FetchTests
     public async void FetchTest2()
     {
         var candidateProvider = _serviceProvider.GetRequiredService<IBullhorn<Candidate>>();
-        var idList = new List<int>();
-        idList.Add(_dummyCandidateId);
+        var idList = new List<int> { _dummyCandidateId };
         var candidates = await candidateProvider.Get(idList);
         Assert.NotNull(candidates);
     }

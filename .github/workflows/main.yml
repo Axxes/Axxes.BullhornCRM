@@ -49,8 +49,8 @@ jobs:
         run: |
           dotnet restore
           dotnet build --configuration '${{ env.BUILD_CONFIGURATION }}'
-          dotnet pack -c '${{ env.BUILD_CONFIGURATION }}' -p:PackageVersion=1.0.0-beta-$GITHUB_RUN_ID --version-suffix beta-$GITHUB_RUN_ID
+          dotnet pack -o ./packages -c '${{ env.BUILD_CONFIGURATION }}' -p:PackageVersion=1.0.0-beta-$GITHUB_RUN_ID --version-suffix beta-$GITHUB_RUN_ID
 
       # Publish the package to Azure Artifacts
       - name: 'dotnet publish'
-        run: dotnet nuget push --api-key AzureArtifacts **/*.nupkg  --no-symbols
+        run: dotnet nuget push --api-key AzureArtifacts ./packages/*.nupkg  --no-symbols
