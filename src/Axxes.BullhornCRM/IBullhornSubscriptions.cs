@@ -11,7 +11,7 @@ public interface IBullhornSubscriptions
     [QueryUriFormat(UriFormat.Unescaped)]
     internal Task<SubscriptionEvent> GetInternal(string id, CancellationToken cancellationToken = default);
 
-    async Task<IEnumerable<SubscriptionEvent.Event>> Get(string id, CancellationToken cancellationToken = default)
+    async Task<IEnumerable<SubscriptionEvent.Event>> Get(string id, IEnumerable<string> names, IEnumerable<string> eventTypes, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -20,7 +20,9 @@ public interface IBullhornSubscriptions
         }
         catch (ApiException e) when (e.StatusCode == HttpStatusCode.NotFound)
         {
-            await PutInternal(id, "Candidate", "UPDATED", cancellationToken);
+            var namesUri = string.Join(",", names);
+            var eventTypesUri = string.Join(",", eventTypes);
+            await PutInternal(id, namesUri, eventTypesUri, cancellationToken);
             return Enumerable.Empty<SubscriptionEvent.Event>();
         }
     }

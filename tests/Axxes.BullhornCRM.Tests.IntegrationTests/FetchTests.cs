@@ -54,7 +54,7 @@ public class FetchTests
     public async void FetchSubscriptions()
     {
         var subscriptionProvider = _serviceProvider.GetRequiredService<IBullhornSubscriptions>();
-        var subscriptionResult = await subscriptionProvider.Get("30001");
+        var subscriptionResult = await subscriptionProvider.Get("30001", new []{"Candidate"}, new []{"UPDATED"});
         Assert.NotNull(subscriptionResult);
     }
 }
