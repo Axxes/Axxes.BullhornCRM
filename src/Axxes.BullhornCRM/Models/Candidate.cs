@@ -30,7 +30,7 @@ public class Candidate : IBullhornEntityWithHistory
     [JsonProperty("email")] public string Email { get; set; }
     [JsonProperty("email2")] public string WorkEmail { get; set; }
     [JsonProperty("employeeType")] public string EmployeeType { get; set; }
-    [JsonProperty("employmentPreference")] public IEnumerable<string> EmploymentPreference { get; set; }
+    [JsonProperty("employmentPreference")] public string EmploymentPreference { get; set; }
     [JsonProperty("firstName")] public string FirstName { get; set; }
     [JsonProperty("lastName")] public string LastName { get; set; }
 
