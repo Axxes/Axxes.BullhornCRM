@@ -39,7 +39,7 @@ public static class ServiceCollectionExtensions
         RegisterBullhornApis(baseEntityUri, services, settings, models);
         RegisterBullhornHistoryApis(baseQueryUri, services, settings, models);
         
-        services.AddRefitClient<IBullhornSubscriptions>()
+        services.AddRefitClient<IBullhornSubscriptions>(settings)
             .ConfigureHttpClient(x =>
             {
                 x.BaseAddress = new Uri(Settings.BaseUri);
