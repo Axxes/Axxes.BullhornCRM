@@ -29,5 +29,6 @@ internal class FieldsHandler<T> : DelegatingHandler where T: class, IBullhornEnt
         .Where(p => p.IsDefined(typeof(JsonPropertyAttribute), false))
         .Select(p => p.GetCustomAttribute(typeof(JsonPropertyAttribute)) as JsonPropertyAttribute)
         .Select(p => p?.PropertyName)
-        .Where(p => p is not null));
+        .Where(p => p is not null)
+        .Distinct());
 }
