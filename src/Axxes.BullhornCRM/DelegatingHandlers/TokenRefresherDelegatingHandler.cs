@@ -8,7 +8,6 @@ internal class BullhornTokenHandler : DelegatingHandler
     private readonly BullhornAuthCredentials _bullhornAuthCredentials;
     private readonly TokenProvider _tokenProvider;
     private readonly BullhornToken _bullhornToken;
-    private string _baseUrl;
         
     public BullhornTokenHandler(BullhornAuthCredentials bullhornAuthCredentials, TokenProvider tokenProvider, BullhornToken bullhornToken)
     {
@@ -27,13 +26,13 @@ internal class BullhornTokenHandler : DelegatingHandler
         if (!Authorized())
         {
             var token = await _tokenProvider.Retrieve(_bullhornAuthCredentials);
-            _baseUrl = token.RestUrl.ToString();
+            _bullhornToken.BaseUrl = token.RestUrl.ToString();
             _bullhornToken.BhRestToken = token.BhRestToken;
             _bullhornToken.Expires = DateTime.UtcNow.AddMinutes(9);
         }
 
         request.RequestUri =
-            new Uri(request.RequestUri.ToString().Replace(Settings.BaseUri, _baseUrl));
+            new Uri(request.RequestUri.ToString().Replace(Settings.BaseUri, _bullhornToken.BaseUrl));
         
         request.Headers.Add("BhRestToken", _bullhornToken.BhRestToken);
             
