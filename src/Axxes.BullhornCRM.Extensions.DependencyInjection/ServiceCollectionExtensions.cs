@@ -48,7 +48,8 @@ public static class ServiceCollectionExtensions
             .ConfigurePrimaryHttpMessageHandler(sp => sp.GetRequiredService<BullhornTokenHandler>());
 
         services.AddTransient<TokenProvider>();
-        services.AddSingleton<BullhornTokenHandler>();
+        services.AddSingleton<BullhornToken>();
+        services.AddTransient<BullhornTokenHandler>();
         services.AddTransient(typeof(FieldsHandler<>));
 
         services.AddHttpClient<CodeFetcher>();
