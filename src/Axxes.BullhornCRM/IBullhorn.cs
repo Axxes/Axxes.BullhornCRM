@@ -104,8 +104,13 @@ public interface IBullhorn<T>  where T : IBullhornEntity
     [Post("/{entity.id}")]
     Task Update([Body] T entity, CancellationToken cancellationToken = default);
 
-    [Post("/{entity.id}")]
-    Task Update<T1>([Body] T1 entity, CancellationToken cancellationToken = default);
+    [Post("/{id}")]
+    Task UpdateInternal<T1>([Body] T1 updateEntity, long id, CancellationToken cancellationToken = default) where T1 : IBullhornEntity;
+
+    async Task Update<T1>([Body] T1 entity, CancellationToken cancellationToken = default) where T1 : IBullhornEntity
+    {
+        await UpdateInternal(entity, entity.Id, cancellationToken);
+    }
     #endregion
     
     #region CreateToManyAssociation
