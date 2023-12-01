@@ -59,4 +59,5 @@ public class FetchTests
         var subscriptionResult = await subscriptionProvider.Get("30001", new []{"Candidate"}, new []{"UPDATED"});
         Assert.NotNull(subscriptionResult);
     }
+
 }

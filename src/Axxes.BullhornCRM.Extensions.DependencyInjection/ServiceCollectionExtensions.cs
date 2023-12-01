@@ -16,18 +16,19 @@ namespace Axxes.BullhornCRM.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBullhornCRM(this IServiceCollection services, Action<BullhornAuthCredentials> options, params Assembly[] assemblies)
+    public static IServiceCollection AddBullhornCRM(this IServiceCollection services,
+        Action<BullhornAuthCredentials> options, params Assembly[] assemblies)
     {
         var auth = new BullhornAuthCredentials();
         options(auth);
-        
+
         var settings = new RefitSettings(new NewtonsoftJsonContentSerializer());
-        
+
         const string baseEntityUri = Settings.BaseUri + "entity/";
         const string baseQueryUri = Settings.BaseUri + "query/";
-        
+
         services.AddSingleton(auth);
-        
+
         var models = typeof(IBullhorn<>)
             .Assembly
             .GetExportedTypes()
@@ -38,7 +39,8 @@ public static class ServiceCollectionExtensions
 
         RegisterBullhornApis(baseEntityUri, services, settings, models);
         RegisterBullhornHistoryApis(baseQueryUri, services, settings, models);
-        
+        RegisterBullhornQueryApis(baseQueryUri, services, settings, models);
+
         services.AddRefitClient<IBullhornSubscriptions>(settings)
             .ConfigureHttpClient(x =>
             {
@@ -55,15 +57,16 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient<CodeFetcher>();
         services.AddHttpClient<AuthorizationCodeFetcher>();
         services.AddHttpClient<RestTokenFetcher>();
-        
+
         services.AddTransient<CodeFetcher>();
         services.AddTransient<AuthorizationCodeFetcher>();
         services.AddTransient<RestTokenFetcher>();
-        
+
         return services;
     }
 
-    private static void RegisterBullhornApis(string baseUri, IServiceCollection services, RefitSettings settings, IEnumerable<Type> models)
+    private static void RegisterBullhornApis(string baseUri, IServiceCollection services, RefitSettings settings,
+        IEnumerable<Type> models)
     {
         var bullhornType = typeof(IBullhorn<>);
         var fieldsHandlerType = typeof(FieldsHandler<>);
@@ -73,7 +76,7 @@ public static class ServiceCollectionExtensions
             var genericBullhornTypeForModel = bullhornType.MakeGenericType(model);
             var genericFieldsHandlerType = fieldsHandlerType.MakeGenericType(model);
             var entityName = model.GetCustomAttribute<EntityNameAttribute>(true);
-            
+
             services
                 .AddRefitClient(genericBullhornTypeForModel, settings)
                 .ConfigureHttpClient(x =>
@@ -82,11 +85,12 @@ public static class ServiceCollectionExtensions
                     x.Timeout = TimeSpan.FromMinutes(10);
                 })
                 .ConfigurePrimaryHttpMessageHandler(sp => sp.GetRequiredService<BullhornTokenHandler>())
-                .AddHttpMessageHandler(sp => (DelegatingHandler) sp.GetRequiredService(genericFieldsHandlerType));
+                .AddHttpMessageHandler(sp => (DelegatingHandler)sp.GetRequiredService(genericFieldsHandlerType));
         }
     }
-    
-    private static void RegisterBullhornHistoryApis(string baseUri, IServiceCollection services, RefitSettings settings, IEnumerable<Type> models)
+
+    private static void RegisterBullhornHistoryApis(string baseUri, IServiceCollection services, RefitSettings settings,
+        IEnumerable<Type> models)
     {
         var bullhornType = typeof(IBullhornEditHistory<>);
 
@@ -94,7 +98,7 @@ public static class ServiceCollectionExtensions
         {
             var genericBullhornTypeForModel = bullhornType.MakeGenericType(model);
             var entityName = model.GetCustomAttribute<EntityHistoryNameAttribute>(true);
-            
+
             services
                 .AddRefitClient(genericBullhornTypeForModel, settings)
                 .ConfigureHttpClient(x =>
@@ -103,6 +107,30 @@ public static class ServiceCollectionExtensions
                     x.Timeout = TimeSpan.FromMinutes(10);
                 })
                 .ConfigurePrimaryHttpMessageHandler(sp => sp.GetRequiredService<BullhornTokenHandler>());
+        }
+    }
+
+    private static void RegisterBullhornQueryApis(string baseUri, IServiceCollection services, RefitSettings settings,
+        IEnumerable<Type> models)
+    {
+        var bullhornQueryType = typeof(IBullhornQuery<>);
+        var fieldsHandlerType = typeof(FieldsHandler<>);
+
+        foreach (var model in models)
+        {
+            var genericBullhornQueryTypeForModel = bullhornQueryType.MakeGenericType(model);
+            var genericFieldsHandlerType = fieldsHandlerType.MakeGenericType(model);
+            var entityName = model.GetCustomAttribute<EntityNameAttribute>(true);
+
+            services
+                .AddRefitClient(genericBullhornQueryTypeForModel, settings)
+                .ConfigureHttpClient(x =>
+                {
+                    x.BaseAddress = new Uri(baseUri + entityName.Name);
+                    x.Timeout = TimeSpan.FromMinutes(10);
+                })
+                .ConfigurePrimaryHttpMessageHandler(sp => sp.GetRequiredService<BullhornTokenHandler>())
+                .AddHttpMessageHandler(sp => (DelegatingHandler)sp.GetRequiredService(genericFieldsHandlerType));
         }
     }
 }
