@@ -101,10 +101,11 @@ public interface IBullhorn<T>  where T : IBullhornEntity
     #endregion
     
     #region Update
-
     [Post("/{entity.id}")]
     Task Update([Body] T entity, CancellationToken cancellationToken = default);
 
+    [Post("/{entity.id}")]
+    Task Update<T1>([Body] T1 entity, CancellationToken cancellationToken = default);
     #endregion
     
     #region CreateToManyAssociation
