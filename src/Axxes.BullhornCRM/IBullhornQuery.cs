@@ -36,7 +36,15 @@ public interface IBullhornQuery<T> where T : IBullhornEntity
         return await Query(query, fields, orderBySelector, count, start, cancellationToken);
     }
 
-    public async Task<BullhornRecords<T>> QueryIn<T1, T2, T3>(Expression<Func<T, T2>> fieldSelector, IEnumerable<T3> values,
+    public async Task<BullhornRecords<T>> QueryEquals<T2, T3>(Expression<Func<T, T2>> fieldSelector, T3 value,
+        string fields = "*", int count = 500, int start = 0,
+        CancellationToken cancellationToken = default)
+    {
+        return await QueryEquals<T, T2, T3>(fieldSelector, value, fields, null, count, start, cancellationToken);
+    }
+
+    public async Task<BullhornRecords<T>> QueryIn<T1, T2, T3>(Expression<Func<T, T2>> fieldSelector,
+        IEnumerable<T3> values,
         string fields = "*",
         Expression<Func<T, T1>> orderBySelector = null, int count = 500, int start = 0,
         CancellationToken cancellationToken = default)
@@ -44,6 +52,13 @@ public interface IBullhornQuery<T> where T : IBullhornEntity
         var name = fieldSelector.GetBullhornFieldName();
         var query = $"{name} IN ({string.Join(", ", values.Select(GetStringValue))})";
         return await Query(query, fields, orderBySelector, count, start, cancellationToken);
+    }
+
+    public async Task<BullhornRecords<T>> QueryIn<T2, T3>(Expression<Func<T, T2>> fieldSelector, IEnumerable<T3> values,
+        string fields = "*", int count = 500, int start = 0,
+        CancellationToken cancellationToken = default)
+    {
+        return await QueryIn<T, T2, T3>(fieldSelector, values, fields, null, count, start, cancellationToken);
     }
 
     private static string GetStringValue<T1>(T1 value)

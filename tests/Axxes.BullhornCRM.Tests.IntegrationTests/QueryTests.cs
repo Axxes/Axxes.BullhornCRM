@@ -40,6 +40,14 @@ public class QueryTests
         var specialties = await specialtyQueryProvider.QueryEquals(x => x.Enabled, true, orderBySelector: x => x.Name);
         Assert.NotEmpty(specialties.Data);
     }
+    
+    [Fact(Skip = "Temporary disabling test")]
+    public async void QuerySpecialtiesEqualsTest2()
+    {
+        var specialtyQueryProvider = _serviceProvider.GetRequiredService<IBullhornQuery<Specialty>>();
+        var specialties = await specialtyQueryProvider.QueryEquals(x => x.Enabled, true);
+        Assert.NotEmpty(specialties.Data);
+    }
 
     [Fact(Skip = "Temporary disabling test")]
     public async void QuerySpecialtiesInTest()
@@ -47,6 +55,14 @@ public class QueryTests
         var specialtyQueryProvider = _serviceProvider.GetRequiredService<IBullhornQuery<Specialty>>();
         var specialties = await specialtyQueryProvider.QueryIn(x => x.Name, new []{"Back-End Developer", "Digital Marketeer"},
             orderBySelector: x => x.Name);
+        Assert.NotEmpty(specialties.Data);
+    }
+    
+    [Fact(Skip = "Temporary disabling test")]
+    public async void QuerySpecialtiesInTest2()
+    {
+        var specialtyQueryProvider = _serviceProvider.GetRequiredService<IBullhornQuery<Specialty>>();
+        var specialties = await specialtyQueryProvider.QueryIn(x => x.Name, new []{"Back-End Developer", "Digital Marketeer"});
         Assert.NotEmpty(specialties.Data);
     }
 }
