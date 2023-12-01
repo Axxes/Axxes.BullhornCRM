@@ -33,7 +33,7 @@ public class QueryTests
         _serviceProvider = services.BuildServiceProvider();
     }
 
-    [Fact(Skip = "Temporary disabling test\"")]
+    [Fact(Skip = "Temporary disabling test")]
     public async void QuerySpecialtiesEqualsTest()
     {
         var specialtyQueryProvider = _serviceProvider.GetRequiredService<IBullhornQuery<Specialty>>();
@@ -41,7 +41,7 @@ public class QueryTests
         Assert.NotEmpty(specialties.Data);
     }
 
-    [Fact(Skip = "Temporary disabling test\"")]
+    [Fact(Skip = "Temporary disabling test")]
     public async void QuerySpecialtiesInTest()
     {
         var specialtyQueryProvider = _serviceProvider.GetRequiredService<IBullhornQuery<Specialty>>();

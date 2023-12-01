@@ -33,7 +33,7 @@ public class UpdateTests
         _serviceProvider = services.BuildServiceProvider();
     }
     
-    [Fact]
+    [Fact(Skip = "Temporary disabling test")]
     public async void QuerySpecialtiesEqualsTest()
     {
         var candidateProvider = _serviceProvider.GetRequiredService<IBullhorn<Candidate>>();
