@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
+using Axxes.BullhornCRM.Attributes;
 using Axxes.BullhornCRM.Models;
 using Axxes.BullhornCRM.Models.CrmEntities;
 using Newtonsoft.Json;
@@ -30,7 +31,6 @@ public interface IBullhorn<T>  where T : IBullhornEntity
 
     public Task<BullhornRecords<T>> Get(IEnumerable<int> ids, string fields = "*", CancellationToken cancellationToken = default) =>
         Get(ids.Select(x => (long) x), fields, cancellationToken);
-    
 
     public Task<BullhornRecords<T>> Get(IEnumerable<int> ids, CancellationToken cancellationToken = default,
         params Expression<Func<T, object>>[] ignoredMembers) => Get(ids, Fields(ignoredMembers), cancellationToken);
@@ -104,6 +104,25 @@ public interface IBullhorn<T>  where T : IBullhornEntity
 
     [Post("/{entity.id}")]
     Task Update([Body] T entity, CancellationToken cancellationToken = default);
+
+    #endregion
+    
+    #region CreateToManyAssociation
+
+    [Put("/{entityId}/{associationName}/{joinedAssociationIds}")]
+    internal Task CreateToManyAssociationsInternal([Body] object body, long entityId, string associationName, string joinedAssociationIds, CancellationToken cancellationToken);
+
+    public async Task CreateToManyAssociations<T1>( long entityId, T1[] associations, CancellationToken cancellationToken) where T1: IBullhornToManyAssociationEntity
+    {
+        var associationName = typeof(T1).GetCustomAttribute<EntityAssociationAttribute>(true)?.Name;
+        if (string.IsNullOrEmpty(associationName))
+        {
+            throw new ArgumentNullException($"Entity {typeof(T1)} has no {nameof(EntityAssociationAttribute)}");
+        }
+        
+        await CreateToManyAssociationsInternal(new object(), entityId, associationName.ToLowerInvariant(),
+            string.Join(',', associations.Select( x => x.Id)), cancellationToken);
+    }
 
     #endregion
 }
