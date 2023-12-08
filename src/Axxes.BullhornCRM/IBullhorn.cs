@@ -22,6 +22,15 @@ public interface IBullhorn<T>  where T : IBullhornEntity
         return result.Data;
     }
     
+    public Task<T> Get(long id, CancellationToken cancellationToken = default,
+        params Expression<Func<T, object>>[] ignoredMembers) => Get(id, Fields(ignoredMembers), cancellationToken);
+    
+    async Task<T> Get(long id, string fields = "*", CancellationToken cancellationToken = default)
+    {
+        var result = await GetInternal(id, fields, cancellationToken);
+        return result.Data;
+    }
+    
     public Task<T> Get(int id, CancellationToken cancellationToken = default,
         params Expression<Func<T, object>>[] ignoredMembers) => Get(id, Fields(ignoredMembers), cancellationToken);
     
