@@ -42,6 +42,40 @@ public interface IBullhornQuery<T> where T : IBullhornEntity
     {
         return await QueryEquals<T, T2, T3>(fieldSelector, value, fields, null, count, start, cancellationToken);
     }
+    
+    public async Task<BullhornRecords<T>> QueryGreater<T1, T2, T3>(Expression<Func<T, T2>> fieldSelector, T3 value,
+        string fields = "*",
+        Expression<Func<T, T1>> orderBySelector = null, int count = 500, int start = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var name = fieldSelector.GetBullhornFieldName();
+        var query = $"{name}>{GetStringValue(value)}";
+        return await Query(query, fields, orderBySelector, count, start, cancellationToken);
+    }
+
+    public async Task<BullhornRecords<T>> QueryGreater<T2, T3>(Expression<Func<T, T2>> fieldSelector, T3 value,
+        string fields = "*", int count = 500, int start = 0,
+        CancellationToken cancellationToken = default)
+    {
+        return await QueryGreater<T, T2, T3>(fieldSelector, value, fields, null, count, start, cancellationToken);
+    }
+    
+    public async Task<BullhornRecords<T>> QuerySmaller<T1, T2, T3>(Expression<Func<T, T2>> fieldSelector, T3 value,
+        string fields = "*",
+        Expression<Func<T, T1>> orderBySelector = null, int count = 500, int start = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var name = fieldSelector.GetBullhornFieldName();
+        var query = $"{name}<{GetStringValue(value)}";
+        return await Query(query, fields, orderBySelector, count, start, cancellationToken);
+    }
+
+    public async Task<BullhornRecords<T>> QuerySmaller<T2, T3>(Expression<Func<T, T2>> fieldSelector, T3 value,
+        string fields = "*", int count = 500, int start = 0,
+        CancellationToken cancellationToken = default)
+    {
+        return await QuerySmaller<T, T2, T3>(fieldSelector, value, fields, null, count, start, cancellationToken);
+    }
 
     public async Task<BullhornRecords<T>> QueryIn<T1, T2, T3>(Expression<Func<T, T2>> fieldSelector,
         IEnumerable<T3> values,
