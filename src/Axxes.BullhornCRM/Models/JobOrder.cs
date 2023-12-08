@@ -1,8 +1,10 @@
-﻿using Axxes.BullhornCRM.Converters;
+﻿using Axxes.BullhornCRM.Attributes;
+using Axxes.BullhornCRM.Converters;
 using Newtonsoft.Json;
 
 namespace Axxes.BullhornCRM.Models;
 
+[EntityName(nameof(JobOrder))]
 public class JobOrder : IBullhornEntity
 {
     [JsonProperty("id")] public long Id { get; set; }
