@@ -26,6 +26,7 @@ public static class ServiceCollectionExtensions
 
         const string baseEntityUri = Settings.BaseUri + "entity/";
         const string baseQueryUri = Settings.BaseUri + "query/";
+        const string baseSearchUri = Settings.BaseUri + "search/";
 
         services.AddSingleton(auth);
 
@@ -40,6 +41,7 @@ public static class ServiceCollectionExtensions
         RegisterBullhornApis(baseEntityUri, services, settings, models);
         RegisterBullhornHistoryApis(baseQueryUri, services, settings, models);
         RegisterBullhornQueryApis(baseQueryUri, services, settings, models);
+        RegisterBullhornSearchApis(baseSearchUri, services, settings, models);
 
         services.AddRefitClient<IBullhornSubscriptions>(settings)
             .ConfigureHttpClient(x =>
@@ -114,6 +116,30 @@ public static class ServiceCollectionExtensions
         IEnumerable<Type> models)
     {
         var bullhornQueryType = typeof(IBullhornQuery<>);
+        var fieldsHandlerType = typeof(FieldsHandler<>);
+
+        foreach (var model in models)
+        {
+            var genericBullhornQueryTypeForModel = bullhornQueryType.MakeGenericType(model);
+            var genericFieldsHandlerType = fieldsHandlerType.MakeGenericType(model);
+            var entityName = model.GetCustomAttribute<EntityNameAttribute>(true);
+
+            services
+                .AddRefitClient(genericBullhornQueryTypeForModel, settings)
+                .ConfigureHttpClient(x =>
+                {
+                    x.BaseAddress = new Uri(baseUri + entityName.Name);
+                    x.Timeout = TimeSpan.FromMinutes(10);
+                })
+                .ConfigurePrimaryHttpMessageHandler(sp => sp.GetRequiredService<BullhornTokenHandler>())
+                .AddHttpMessageHandler(sp => (DelegatingHandler)sp.GetRequiredService(genericFieldsHandlerType));
+        }
+    }
+    
+    private static void RegisterBullhornSearchApis(string baseUri, IServiceCollection services, RefitSettings settings,
+        IEnumerable<Type> models)
+    {
+        var bullhornQueryType = typeof(IBullhornSearch<>);
         var fieldsHandlerType = typeof(FieldsHandler<>);
 
         foreach (var model in models)
