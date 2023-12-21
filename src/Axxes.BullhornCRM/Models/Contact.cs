@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Axxes.BullhornCRM.Models;
 
-[EntityName(nameof(Contact))]
+[EntityName("ClientContact")]
 public class Contact : IBullhornEntity
 {
     public Contact()
