@@ -21,6 +21,6 @@ public class MillisecondEpochConverter : DateTimeConverterBase
         object existingValue,
         JsonSerializer serializer)
     {
-        return reader.Value == null ? null : Epoch.AddMilliseconds((long) reader.Value);
+        return reader.Value == null ? null : Epoch.AddMilliseconds((long) reader.Value).DateTime;
     }
 }
