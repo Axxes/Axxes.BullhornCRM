@@ -98,7 +98,7 @@ public interface IBullhorn<T>  where T : IBullhornEntity
 
     #region Add
 
-    [Put("/")]
+    [Put("")]
     internal Task<CrmChangeResponse> AddInternal([Body] T entity, CancellationToken cancellationToken);
 
     public async Task<long> Add([Body] T entity, CancellationToken cancellationToken = default)
